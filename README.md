@@ -1,3 +1,16 @@
+# text_summary.py
+
+from transformers import pipeline
+
+def summarizer(rawdocs):
+    
+    summarizer = pipeline("summarization", model="KishalayGhoshKIIT/bbc_news_summarization")
+    summary=summarizer(text)[0]
+    print(summary)
+    return "summary"
+
+
+
 # txtsummarize
  The objective of this project is to implement a Deep Reinforcement Learning based system for text summarization and question answering. Given a source text document or chat history, the system should perform the following tasks:
 
