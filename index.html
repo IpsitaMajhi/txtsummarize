@@ -1,0 +1,50 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarizer</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <nav>
+            <h2><a href="">Text Summarizer</a></h2>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="input">
+            <h2>Summarizer</h2>
+            <textarea placeholder="Enter your input text here..." name="input_content" id="input-content"></textarea>
+        </div>
+        <div class="output">
+            <h2>Summarized Text</h2>
+            <textarea name="output_content" id="output-content"></textarea>
+        </div>
+    </div>
+    <div class="gen">
+        <div class="gen_btn"><button type="button" onclick="summarizeText()">Summarize Now</button></div>
+        <p id="bleu-result">BLEU Result: </p>
+    </div>
+
+    <script>
+        function summarizeText() {
+            var textInput = document.getElementById('input-content').value;
+
+            fetch('/summarize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Use JSON content type
+                },
+                body: JSON.stringify({ 'input_content': textInput }), // Stringify the data
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output-content').value = data.summary;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
